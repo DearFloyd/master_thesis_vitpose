@@ -77,8 +77,8 @@ def main():
                         help='Config file for pose')
     parser.add_argument('--pose_checkpoint', 
                         # default='/workspace/cv-docker/joey04.li/datasets/ViTPose/weights/vitpose+_base_coco+aic+mpii+ap10k+apt36k+wholebody_256x192_udp.pth',
-                        # default='/workspace/cv-docker/joey04.li/datasets/ViTPose/runs/train/vit_halpe136_384bs_250ep/best_AP_epoch_250.pth',
-                        default='/workspace/cv-docker/joey04.li/datasets/ViTPose/runs/train/vit_halpe136/best_AP_epoch_140.pt',
+                        default='/workspace/cv-docker/joey04.li/datasets/ViTPose/runs/train/vit_halpe136_384bs_250ep/best_AP_epoch_250.pth',
+                        # default='/workspace/cv-docker/joey04.li/datasets/ViTPose/runs/train/vit_halpe136/best_AP_epoch_140.pt',
                         help='Checkpoint file for pose')
     parser.add_argument('--video-path', type=str, 
                         default='/workspace/cv-docker/joey04.li/datasets/video_data/10.22-raw-split1.mp4',
