@@ -7,3 +7,4 @@
 # mmdet==2.19.0
 # torch==1.9.0+cuda11.1
 # python==3.8.0
+# opencv-python==4.8.1.78
