@@ -32,7 +32,7 @@ def parse_opt_yolov8():
     parser = ArgumentParser()
     parser.add_argument('--weight', type=str, default='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/train/yolov8s-C2f-EMSCP-164bs-500ep/weights/best.pt', help='training model path')
     parser.add_argument('--source', type=str, default='/workspace/cv-docker/joey04.li/datasets/video_data/10.22-raw-split1.mp4', help='source directory for images or videos')
-    parser.add_argument('--conf', type=float, default=0.25, help='object confidence threshold for detection')
+    parser.add_argument('--conf', type=float, default=0.35, help='object confidence threshold for detection')
     parser.add_argument('--iou', type=float, default=0.7, help='intersection over union (IoU) threshold for NMS')
     parser.add_argument('--mode', type=str, default='predict', choices=['predict', 'track'], help='predict mode or track mode')
     parser.add_argument('--project', type=str, default='runs/detect', help='project name')
@@ -126,7 +126,8 @@ def main():
     assert args.det_config is not None
     assert args.det_checkpoint is not None
 
-    det_model_yolov8 = YOLO(model='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/train/yolov8s-C2f-EMSCP-164bs-500ep/weights/best.pt')
+    # det_model_yolov8 = YOLO(model='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/train/yolov8s-C2f-EMSCP-164bs-500ep/weights/best.pt')
+    det_model_yolov8 = YOLO(model='/workspace/cv-docker/joey04.li/datasets/master_thesis_yolov8/runs/train/yolov8s-C2f-EMSC-attention-head--164bs-500ep/weights/best.pt')
     # det_model = init_detector(
     #     args.det_config, args.det_checkpoint, device=args.device.lower())
     pose_estimator = PoseEstimator()
@@ -206,6 +207,7 @@ def main():
             return_heatmap=return_heatmap,
             outputs=output_layer_names)
 
+        angles = []
         for pose in pose_results:
             bbox = pose['bbox'].tolist()  # 将bbox转为scale格式
             xmin, ymin, xmax, ymax = bbox[0:4]
@@ -221,6 +223,7 @@ def main():
             # face_pose = np.float32(face_pose[:, 0:2] - center)
             head_rotation_vector, head_translation_vector = pose_estimator.solve_pose(face_pose)
             angles_pitch = head_rotation_vector[0][0] * 57.3  # 47.3 -160多的为背对着
+            angles.append(angles_pitch)
             # pose_estimator.draw_axis(img, head_rotation_vector, head_translation_vector)
 
         # show the results
